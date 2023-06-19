@@ -2,6 +2,7 @@ import React from "react";
 
 // components
 import Navbar from "./Navbar";
+import Searchbar from "./Searchbar";
 
 // assets
 import header from "../assets/NL-en-20230306-popsignuptwoweeks-perspective_alpha_website_medium.jpg";
@@ -22,15 +23,7 @@ const Header = ({ searchTitle, handleChange }) => {
         <Navbar />
 
         {/* search bar */}
-        <div className="text-white h-40 flex justify-center items-center px-10 lg:px-20">
-          <input
-            type="search"
-            value={searchTitle}
-            onChange={handleChange}
-            placeholder="search for a movie..."
-            className="mb-5 mt-2 p-3 rounded-md border border-gray-400 focus:border-amber-400 focus:outline-none text-black w-full"
-          />
-        </div>
+        <Searchbar searchTitle={searchTitle} handleChange={handleChange} />
       </div>
     </div>
   );

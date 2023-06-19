@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 // components
 import Header from "../components/Header";
@@ -10,10 +9,12 @@ import favs from "../assets/undraw_appreciation_dns0.svg";
 import couch from "../assets/undraw_horror_movie_3988.svg";
 
 // other packages and libraries
-import { Badge, Tooltip } from "flowbite-react";
-import { BsBalloonHeartFill } from "react-icons/bs";
 import CategoryTitle from "../components/CategoryTitle";
 import SortFilter from "../components/SortFilter";
+import Pagination from "../components/Pagination";
+import SearchResults from "../components/SearchResults";
+import FavoritesResult from "../components/FavoritesResult";
+import NotCompleteMessage from "../components/NotCompleteMessage";
 
 const Home = () => {
   //  states to manage the search results
@@ -135,63 +136,13 @@ const Home = () => {
 
         {/* search results */}
         {searchTitle && movies.length > 0 ? (
-          <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-x-10 gap-y-6 mt-5">
-            {movies &&
-              currentMovies.map((result) => (
-                <div key={result.imdbID}>
-                  <div className="h-60 overflow-hidden">
-                    {/* movie poster image */}
-                    <Link to={`/movies/${result.imdbID}`}>
-                      <img
-                        src={result.Poster}
-                        alt={result.Title}
-                        className="h-full w-full object-cover object-center"
-                      />
-                    </Link>
-                  </div>
-
-                  {/* movie title */}
-                  <h3 className="text-amber-400 text-sm font-semibold">
-                    {result.Title}
-                  </h3>
-
-                  <div className="flex items-center justify-between pt-2">
-                    {/* year of release */}
-                    <p className="text-white text-xs">{result.Year}</p>
-
-                    {/* button to view the movie details */}
-                    <Link to={`/movies/${result.imdbID}`}>
-                      <Badge color="success" size="xs">
-                        View details
-                      </Badge>
-                    </Link>
-                  </div>
-
-                  {/* add to or remove from favorites button */}
-                  <div className="mt-2 flex">
-                    {isFavorite(result) ? (
-                      // icon button to remove a movie from favorites
-                      <Tooltip content="Remove from favorites">
-                        <BsBalloonHeartFill
-                          size={20}
-                          color="red"
-                          onClick={() => handleRemoveFromFavorites(result)}
-                        />
-                      </Tooltip>
-                    ) : (
-                      // icon button to add a movie to your favorites
-                      <Tooltip content="Add to favorites">
-                        <BsBalloonHeartFill
-                          size={20}
-                          color="white"
-                          onClick={() => handleAddToFavorites(result)}
-                        />
-                      </Tooltip>
-                    )}
-                  </div>
-                </div>
-              ))}
-          </div>
+          <SearchResults
+            movies={movies}
+            currentMovies={currentMovies}
+            isFavorite={isFavorite}
+            handleAddToFavorites={handleAddToFavorites}
+            handleRemoveFromFavorites={handleRemoveFromFavorites}
+          />
         ) : searchTitle && movies.length === 0 ? (
           // display if the search title and the movies length is 0, or a search is not complete
           <p className="text-white text-center mt-3 lg:mt-5">
@@ -200,89 +151,37 @@ const Home = () => {
           </p>
         ) : (
           // display when no search has been made or when the page loads for the first time
-          <div className="mt-3 lg:mt-5 flex flex-col justify-center items-center">
-            <img src={couch} alt="favs" className="w-32 h-32 lg:w-56 lg:h-56" />
-            <p className="text-white">Please enter a movie title to search</p>
-          </div>
+          <NotCompleteMessage
+            image={couch}
+            message="Please enter a movie title to search"
+          />
         )}
       </div>
 
       {/* pagination */}
-      <div className="mt-5 flex justify-center">
-        {Array.from({ length: Math.ceil(movies.length / moviesPerPage) }).map(
-          (_, index) => (
-            <button
-              key={index}
-              className={`mx-1 px-2 py-1 rounded ${
-                currentPage === index + 1 ? "bg-amber-400" : "bg-gray-300"
-              }`}
-              onClick={() => paginate(index + 1)}
-            >
-              {index + 1}
-            </button>
-          )
-        )}
-      </div>
+      <Pagination
+        movies={movies}
+        moviesPerPage={moviesPerPage}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
 
       {/* favorites */}
       <div className="px-10 lg:px-20 w-full py-5">
         <CategoryTitle title="Favorites" />
 
         {favorites.length > 0 ? (
-          <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-x-10 gap-y-6 mt-5">
-            {/* dsiplay movies added to favorites */}
-            {favorites.map((favorite) => (
-              <div key={favorite.imdbID}>
-                <div className="h-60 overflow-hidden">
-                  {/* movie poster and link to view movie details */}
-                  <Link to={`/movies/${favorite.imdbID}`}>
-                    <img
-                      src={favorite.Poster}
-                      alt={favorite.Title}
-                      className="h-full w-full object-cover object-center"
-                    />
-                  </Link>
-                </div>
-
-                {/* movie title */}
-                <h3 className="text-amber-400 text-sm font-semibold">
-                  {favorite.Title}
-                </h3>
-
-                <div className="flex items-center justify-between pt-2">
-                  {/* year of release */}
-                  <p className="text-white text-xs">{favorite.Year}</p>
-
-                  {/* button to view the movie details */}
-                  <Link to={`/movies/${favorite.imdbID}`}>
-                    <Badge color="success" size="xs">
-                      View details
-                    </Badge>{" "}
-                  </Link>
-                </div>
-
-                {/* icon button to remove a movie from favorites */}
-                <div className="mt-2 flex">
-                  <Tooltip content="Remove from favorites">
-                    <BsBalloonHeartFill
-                      size={20}
-                      color="red"
-                      onClick={() => handleRemoveFromFavorites(favorite)}
-                    />
-                  </Tooltip>
-                </div>
-              </div>
-            ))}
-          </div>
+          <FavoritesResult
+            favorites={favorites}
+            handleRemoveFromFavorites={handleRemoveFromFavorites}
+          />
         ) : (
           // display when no favorites have been added
-          <div className="mt-3 lg:mt-5 flex flex-col justify-center items-center">
-            <img src={favs} alt="favs" className="w-32 h-32 lg:w-56 lg:h-56" />
-            <p className="text-white">
-              No favorites selected yet, search for a movie and click on the
-              like button to add one
-            </p>
-          </div>
+          <NotCompleteMessage
+            image={favs}
+            message="No favorites selected yet, search for a movie and click on the
+          like button to add one"
+          />
         )}
       </div>
     </div>
