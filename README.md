@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `vercel deployment`
+
+View the vercel deployment here: https://movies-search-app-three.vercel.app/
+
 ### `npm install`
 
 Installs all neccessary packages and dependencies in the project.

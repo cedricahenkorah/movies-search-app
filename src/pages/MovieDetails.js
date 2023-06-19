@@ -69,10 +69,10 @@ const MovieDetails = () => {
               <p className="text-sm text-indigo-600">{movieDetails.Released}</p>
 
               {/* director */}
-              <div className="flex items-center text-base text-gray-400">
+              <div className="flex items-center lg:text-base text-xs text-gray-400">
                 <h1> Directed by</h1>
 
-                <p className="ml-2 text-white underline underline-offset-4 leading-7 text-base">
+                <p className="ml-1 lg:ml-2 text-white underline underline-offset-4 leading-7 lg:text-base text-xs">
                   {movieDetails.Director}
                 </p>
               </div>

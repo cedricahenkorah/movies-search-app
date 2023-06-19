@@ -12,6 +12,8 @@ import couch from "../assets/undraw_horror_movie_3988.svg";
 // other packages and libraries
 import { Badge, Tooltip } from "flowbite-react";
 import { BsBalloonHeartFill } from "react-icons/bs";
+import CategoryTitle from "../components/CategoryTitle";
+import SortFilter from "../components/SortFilter";
 
 const Home = () => {
   //  states to manage the search results
@@ -122,23 +124,13 @@ const Home = () => {
 
       <div className="px-10 lg:px-20 w-full py-5">
         <div className="flex justify-between">
-          <h1 className="font-semibold lg:text-xl text-lg text-amber-400">
-            Search Results
-          </h1>
+          <CategoryTitle title="Search Results" />
 
           {/* sort filter */}
-          <div className="flex items-center gap-x-2">
-            <div>
-              <select
-                className="p-1 rounded-md border border-gray-400 focus:border-amber-400 focus:outline-none text-black w-full"
-                value={sortOption}
-                onChange={handleSortOptionChange}
-              >
-                <option value="">Sort by:</option>
-                <option value="year">Year</option>
-              </select>
-            </div>
-          </div>
+          <SortFilter
+            sortOption={sortOption}
+            handleSortOptionChange={handleSortOptionChange}
+          />
         </div>
 
         {/* search results */}
@@ -234,9 +226,7 @@ const Home = () => {
 
       {/* favorites */}
       <div className="px-10 lg:px-20 w-full py-5">
-        <h1 className="font-semibold lg:text-xl text-lg text-amber-400">
-          Favorites
-        </h1>
+        <CategoryTitle title="Favorites" />
 
         {favorites.length > 0 ? (
           <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-x-10 gap-y-6 mt-5">
@@ -290,7 +280,7 @@ const Home = () => {
             <img src={favs} alt="favs" className="w-32 h-32 lg:w-56 lg:h-56" />
             <p className="text-white">
               No favorites selected yet, search for a movie and click on the
-              like button to add one{" "}
+              like button to add one
             </p>
           </div>
         )}
