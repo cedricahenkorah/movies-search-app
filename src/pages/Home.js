@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 // components
 import Header from "../components/Header";
 
+// assets
+import favs from "../assets/undraw_appreciation_dns0.svg";
+import couch from "../assets/undraw_horror_movie_3988.svg";
+
 // other packages
 import { Badge, Tooltip } from "flowbite-react";
 import { BsBalloonHeartFill } from "react-icons/bs";
@@ -199,11 +203,15 @@ const Home = () => {
         ) : searchTitle && movies.length === 0 ? (
           // display if the search title and the movies length is 0, or a search is not complete
           <p className="text-white text-center">
-            Nothing found yet...complete the search term or try again
+            Still looking but nothing found yet...complete the search term or
+            try again
           </p>
         ) : (
           // display when no search has been made or when the page loads for the first time
-          <p className="text-white text-center">Please enter a search term</p>
+          <div className="mt-3 lg:mt-5 flex flex-col justify-center items-center">
+            <img src={couch} alt="favs" className="w-32 h-32 lg:w-56 lg:h-56" />
+            <p className="text-white">Please enter a movie title to search</p>
+          </div>
         )}
       </div>
 
@@ -227,51 +235,63 @@ const Home = () => {
       {/* favorites */}
       <div className="px-10 lg:px-20 w-full py-5">
         <h1 className="font-semibold text-xl text-amber-400">Favorites</h1>
-        <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-x-10 gap-y-6 mt-5">
-          {/* dsiplay movies added to favorites */}
-          {favorites.map((favorite) => (
-            <div key={favorite.imdbID}>
-              <div className="h-60 overflow-hidden">
-                {/* movie poster and link to view movie details */}
-                <Link to={`/movies/${favorite.imdbID}`}>
-                  <img
-                    src={favorite.Poster}
-                    alt={favorite.Title}
-                    className="h-full w-full object-cover object-center"
-                  />
-                </Link>
+
+        {favorites.length > 0 ? (
+          <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-x-10 gap-y-6 mt-5">
+            {/* dsiplay movies added to favorites */}
+            {favorites.map((favorite) => (
+              <div key={favorite.imdbID}>
+                <div className="h-60 overflow-hidden">
+                  {/* movie poster and link to view movie details */}
+                  <Link to={`/movies/${favorite.imdbID}`}>
+                    <img
+                      src={favorite.Poster}
+                      alt={favorite.Title}
+                      className="h-full w-full object-cover object-center"
+                    />
+                  </Link>
+                </div>
+
+                {/* movie title */}
+                <h3 className="text-amber-400 text-sm font-semibold">
+                  {favorite.Title}
+                </h3>
+
+                <div className="flex items-center justify-between pt-2">
+                  {/* year of release */}
+                  <p className="text-white text-xs">{favorite.Year}</p>
+
+                  {/* button to view the movie details */}
+                  <Link to={`/movies/${favorite.imdbID}`}>
+                    <Badge color="success" size="xs">
+                      View details
+                    </Badge>{" "}
+                  </Link>
+                </div>
+
+                {/* icon button to remove a movie from favorites */}
+                <div className="mt-2 flex">
+                  <Tooltip content="Remove from favorites">
+                    <BsBalloonHeartFill
+                      size={20}
+                      color="red"
+                      onClick={() => handleRemoveFromFavorites(favorite)}
+                    />
+                  </Tooltip>
+                </div>
               </div>
-
-              {/* movie title */}
-              <h3 className="text-amber-400 text-sm font-semibold">
-                {favorite.Title}
-              </h3>
-
-              <div className="flex items-center justify-between pt-2">
-                {/* year of release */}
-                <p className="text-white text-xs">{favorite.Year}</p>
-
-                {/* button to view the movie details */}
-                <Link to={`/movies/${favorite.imdbID}`}>
-                  <Badge color="success" size="xs">
-                    View details
-                  </Badge>{" "}
-                </Link>
-              </div>
-
-              {/* icon button to remove a movie from favorites */}
-              <div className="mt-2 flex">
-                <Tooltip content="Remove from favorites">
-                  <BsBalloonHeartFill
-                    size={20}
-                    color="red"
-                    onClick={() => handleRemoveFromFavorites(favorite)}
-                  />
-                </Tooltip>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          // display when no favorites have been added
+          <div className="mt-3 lg:mt-5 flex flex-col justify-center items-center">
+            <img src={favs} alt="favs" className="w-32 h-32 lg:w-56 lg:h-56" />
+            <p className="text-white">
+              No favorites selected yet, search for a movie and click on the
+              like button to add one{" "}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
