@@ -36,7 +36,7 @@ const MovieDetails = () => {
     fetchMovieDetails();
   }, [imdbID]);
 
-  // if there are o details yet or the page is loading return this
+  // if there are no details yet or the page is loading return this
   if (!movieDetails) {
     return (
       <div className="flex flex-col justify-center items-center w-full min-h-screen">
