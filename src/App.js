@@ -4,7 +4,7 @@ import MovieDetails from "./pages/MovieDetails";
 
 function App() {
   return (
-    <div className="w-full bg-gradient-to-b from-neutral-900 to-neutral-600 min-h-screen">
+    <div className="w-full bg-gradient-to-b from-black to-neutral-700 min-h-screen">
       {/* routes */}
       <BrowserRouter>
         <Routes>

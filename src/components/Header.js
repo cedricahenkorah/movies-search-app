@@ -1,5 +1,9 @@
 import React from "react";
+
+// components
 import Navbar from "./Navbar";
+
+// assets
 import header from "../assets/NL-en-20230306-popsignuptwoweeks-perspective_alpha_website_medium.jpg";
 
 const Header = ({ searchTitle, handleChange }) => {

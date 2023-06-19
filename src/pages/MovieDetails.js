@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+
+// assets
 import Navbar from "../components/Navbar";
+
+// other packages and libraries
+import axios from "axios";
+import { Levels } from "react-activity";
+import "react-activity/dist/library.css";
 import { IoIosPeople } from "react-icons/io";
 import { Button } from "flowbite-react";
 
@@ -31,8 +37,9 @@ const MovieDetails = () => {
   // if there are o details yet or the page is loading return this
   if (!movieDetails) {
     return (
-      <div className="text-amber-400 font-semibold flex justify-center items-center w-full min-h-screen">
-        Loading...
+      <div className="flex flex-col justify-center items-center w-full min-h-screen">
+        <Levels size={50} className="text-amber-400" />
+        <h1 className="text-amber-400 font-semibold">Loading...</h1>
       </div>
     );
   }

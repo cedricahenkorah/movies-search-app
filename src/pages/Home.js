@@ -9,7 +9,7 @@ import Header from "../components/Header";
 import favs from "../assets/undraw_appreciation_dns0.svg";
 import couch from "../assets/undraw_horror_movie_3988.svg";
 
-// other packages
+// other packages and libraries
 import { Badge, Tooltip } from "flowbite-react";
 import { BsBalloonHeartFill } from "react-icons/bs";
 
@@ -122,7 +122,7 @@ const Home = () => {
 
       <div className="px-10 lg:px-20 w-full py-5">
         <div className="flex justify-between">
-          <h1 className="font-semibold text-xl text-amber-400">
+          <h1 className="font-semibold lg:text-xl text-lg text-amber-400">
             Search Results
           </h1>
 
@@ -202,7 +202,7 @@ const Home = () => {
           </div>
         ) : searchTitle && movies.length === 0 ? (
           // display if the search title and the movies length is 0, or a search is not complete
-          <p className="text-white text-center">
+          <p className="text-white text-center mt-3 lg:mt-5">
             Still looking but nothing found yet...complete the search term or
             try again
           </p>
@@ -234,7 +234,9 @@ const Home = () => {
 
       {/* favorites */}
       <div className="px-10 lg:px-20 w-full py-5">
-        <h1 className="font-semibold text-xl text-amber-400">Favorites</h1>
+        <h1 className="font-semibold lg:text-xl text-lg text-amber-400">
+          Favorites
+        </h1>
 
         {favorites.length > 0 ? (
           <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-x-10 gap-y-6 mt-5">
